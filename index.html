@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Presuposisi - Technical Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #010204;
+            color: #f0f6fc;
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden; /* STRICT NO SCROLL */
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+        }
+
+        /* SUPER RADIANT CYBER GRID BACKGROUND */
+        .cyber-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.18) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.18) 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 128, 0.22) 0%, transparent 75%);
+            background-size: min(4vw, 40px) min(4vw, 40px), min(4vw, 40px) min(4vw, 40px), 100vw 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* HYPER BRIGHT PRIMARY SCANLINE */
+        .scanline-primary {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 128, 1), #00ff80, rgba(0, 255, 128, 1), transparent);
+            box-shadow: 0 0 45px rgba(0, 255, 128, 1), 0 0 25px #00ff80, 0 0 5px #ffffff;
+            position: absolute;
+            z-index: 1;
+            animation: scanMajestic 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            pointer-events: none;
+        }
+
+        /* HYPER BRIGHT SECONDARY SCANLINE */
+        .scanline-secondary {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(0, 238, 255, 1), #00eeff, rgba(0, 238, 255, 1), transparent);
+            box-shadow: 0 0 35px rgba(0, 238, 255, 1), 0 0 15px #00eeff;
+            position: absolute;
+            z-index: 1;
+            animation: scanSecondary 4.5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanMajestic {
+            0% { top: -10%; opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { top: 110%; opacity: 0; }
+        }
+
+        @keyframes scanSecondary {
+            0% { top: 110%; opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { top: -10%; opacity: 0; }
+        }
+
+        #presentation-container {
+            position: relative;
+            width: 96vw;
+            height: 94vh;
+            max-width: 1400px;
+            max-height: 900px;
+            background: rgba(5, 10, 18, 0.96);
+            border: 2px solid #00eeff;
+            box-shadow: 0 0 70px rgba(0, 238, 255, 0.45), inset 0 0 50px rgba(0, 255, 128, 0.12);
+            z-index: 2;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Super Glowing HUD Corners */
+        .hud-corner {
+            position: absolute;
+            width: clamp(20px, 4vmin, 38px);
+            height: clamp(20px, 4vmin, 38px);
+            border: clamp(3px, 0.7vmin, 5px) solid #00ff80;
+            box-shadow: 0 0 15px #00ff80;
+            z-index: 10;
+        }
+        .hud-tl { top: 2%; left: 2%; border-right: none; border-bottom: none; }
+        .hud-tr { top: 2%; right: 2%; border-left: none; border-bottom: none; }
+        .hud-bl { bottom: calc(10vh + 2%); left: 2%; border-right: none; border-top: none; }
+        .hud-br { bottom: calc(10vh + 2%); right: 2%; border-left: none; border-top: none; }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90%;
+            padding: clamp(25px, 4.5vh, 55px) clamp(35px, 6vw, 85px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: glitchFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes glitchFadeIn {
+            0% { opacity: 0; transform: scale(0.98) translateY(2vh); filter: blur(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+        }
+
+        h1, h2 {
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            margin-bottom: clamp(12px, 2.2vh, 22px);
+            line-height: 1.15;
+        }
+
+        .slide-tag {
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff80;
+            font-size: clamp(1.1rem, 2.4vmin, 1.5rem);
+            text-shadow: 0 0 12px rgba(0, 255, 128, 0.7);
+            margin-bottom: clamp(10px, 1.8vh, 18px);
+            display: inline-block;
+            border-bottom: 2px solid #00ff80;
+            padding-bottom: 4px;
+        }
+
+        h1 {
+            color: #00eeff;
+            font-size: clamp(2.4rem, 6.2vmin, 3.9rem);
+            text-shadow: 0 0 20px rgba(0, 238, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.6);
+            border-left: clamp(6px, 1vw, 9px) solid #00ff80;
+            padding-left: clamp(14px, 2.2vw, 22px);
+            box-shadow: inset 10px 0 15px -10px rgba(0, 255, 128, 0.5);
+        }
+
+        p, li {
+            font-size: clamp(1.3rem, 3.4vmin, 2.1rem);
+            line-height: 1.45;
+            margin-bottom: clamp(10px, 1.8vh, 18px);
+            color: #ffffff;
+            text-shadow: 0 0 2px rgba(0, 238, 255, 0.3);
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            width: 100%;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: clamp(25px, 3.8vw, 38px);
+            margin-bottom: clamp(10px, 1.8vh, 18px);
+        }
+
+        ul li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: #00eeff;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00eeff;
+        }
+
+        .example-box {
+            background: rgba(0, 238, 255, 0.08);
+            border: 2px solid rgba(0, 238, 255, 0.6);
+            border-left: 8px solid #00eeff;
+            box-shadow: 0 0 25px rgba(0, 238, 255, 0.2);
+            padding: clamp(18px, 2.8vh, 28px) clamp(20px, 3.2vw, 30px);
+            margin-top: clamp(14px, 2.2vh, 22px);
+            border-radius: 6px;
+            position: relative;
+            width: 100%;
+        }
+
+        .example-box::before {
+            content: "DATA_LOG // CONTOH";
+            position: absolute;
+            top: -13px;
+            left: 16px;
+            background: #050a12;
+            padding: 0 12px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: clamp(0.85rem, 1.8vmin, 1.1rem);
+            color: #00ff80;
+            text-shadow: 0 0 10px #00ff80;
+            letter-spacing: 1px;
+        }
+
+        .example-text {
+            font-style: italic;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            margin-bottom: clamp(10px, 1.8vh, 15px);
+        }
+
+        .presuposisi-result {
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff80;
+            text-shadow: 0 0 12px rgba(0, 255, 128, 0.8);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: clamp(1.2rem, 3.1vmin, 1.95rem);
+        }
+        
+        .highlight { 
+            color: #00eeff; 
+            font-weight: bold; 
+            text-shadow: 0 0 12px rgba(0, 238, 255, 0.9);
+        }
+
+        .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(12px, 1.8vh, 18px) clamp(18px, 2.2vw, 26px);
+            width: 100%;
+            margin-top: clamp(12px, 1.8vh, 18px);
+        }
+
+        .grid-item {
+            background: rgba(0, 238, 255, 0.08);
+            border: 2px solid rgba(0, 238, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 238, 255, 0.15);
+            padding: clamp(14px, 2vh, 20px) clamp(18px, 2.2vw, 24px);
+            font-size: clamp(1.15rem, 3vmin, 1.85rem);
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10%;
+            min-height: 55px;
+            background: rgba(1, 2, 4, 0.99);
+            border-top: 2px solid rgba(0, 238, 255, 0.6);
+            box-shadow: 0 -5px 25px rgba(0, 238, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            z-index: 20;
+        }
+
+        .btn {
+            background: rgba(0, 238, 255, 0.12);
+            color: #00eeff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: clamp(1rem, 2.3vmin, 1.45rem);
+            border: 2px solid #00eeff;
+            box-shadow: 0 0 15px rgba(0, 238, 255, 0.4);
+            padding: clamp(8px, 1.4vh, 14px) clamp(24px, 3.8vw, 38px);
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            outline: none;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: rgba(0, 238, 255, 0.35);
+            color: #ffffff;
+            box-shadow: 0 0 30px rgba(0, 238, 255, 0.9), 0 0 10px #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn:disabled {
+            border-color: #2a3b4c;
+            color: #4a627a;
+            cursor: not-allowed;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .slide-counter {
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff80;
+            text-shadow: 0 0 15px rgba(0, 255, 128, 0.9);
+            font-size: clamp(1.2rem, 3vmin, 1.7rem);
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        @media (orientation: portrait) {
+            .grid-6 { grid-template-columns: 1fr; gap: 12px; }
+            .slide { padding: 3vh 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+    <div class="scanline-primary"></div>
+    <div class="scanline-secondary"></div>
+
+    <div id="presentation-container">
+        <div class="hud-corner hud-tl"></div>
+        <div class="hud-corner hud-tr"></div>
+        <div class="hud-corner hud-bl"></div>
+        <div class="hud-corner hud-br"></div>
+
+        <!-- Slide 1: Cover with Members including Mila -->
+        <div class="slide active">
+            <div style="text-align: center; width: 100%; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                <div class="slide-tag" style="margin-bottom: 15px;">[ SYSTEM_INIT :: PRAGMATIK BAHASA ]</div>
+                <h1 style="border: none; padding: 0; text-align: center; font-size: clamp(2.6rem, 8vmin, 5.2rem); text-shadow: 0 0 30px rgba(0, 238, 255, 0.9), 0 0 10px #ffffff; margin-bottom: 25px;">PRESUPOSISI</h1>
+                
+                <div style="display: inline-block; text-align: left; background: rgba(0, 255, 128, 0.06); border: 2px solid #00ff80; box-shadow: 0 0 25px rgba(0, 255, 128, 0.3); padding: clamp(18px, 3vh, 28px) clamp(25px, 4vw, 42px); border-radius: 6px; margin: 0 auto; max-width: 95%;">
+                    <p style="font-family: 'Share Tech Mono', monospace; color: #00ff80; text-shadow: 0 0 10px #00ff80; font-size: clamp(1rem, 2.4vmin, 1.4rem); margin-bottom: 12px; border-bottom: 1px dashed #00ff80; padding-bottom: 6px;">>_ PARAMETER_ANGGOTA:</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px 22px; justify-content: center; font-size: clamp(1.15rem, 3.1vmin, 1.75rem); color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); font-weight: 700;">
+                        <span>[ AGUNG ]</span>
+                        <span>[ ANNI ]</span>
+                        <span>[ ERIK ]</span>
+                        <span>[ KUIS ]</span>
+                        <span>[ MILA ]</span>
+                        <span>[ SHINTA ]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-tag">NODE_01 :: DEFINISI_SISTEM</div>
+            <h1>Pengertian Presuposisi</h1>
+            <p>Presuposisi (Praanggapan) adalah informasi atau anggapan yang <span class="highlight">dianggap sudah diketahui atau diterima</span> sebelum suatu tuturan disampaikan.</p>
+            
+            <div class="example-box">
+                <p class="example-text">“Rina berhenti merokok.”</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Rina sebelumnya merokok.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-tag">NODE_02 :: SPESIFIKASI_DATA</div>
+            <h1>Karakteristik Presuposisi</h1>
+            <ul>
+                <li>Merupakan asumsi awal penutur sebelum menyampaikan tuturan.</li>
+                <li>Berkaitan dengan pengetahuan bersama penutur dan mitra tutur.</li>
+                <li>Sangat bergantung pada konteks.</li>
+                <li>Dapat berupa informasi yang benar, belum tentu benar, atau bertentangan dengan kenyataan.</li>
+                <li>Dapat ditandai oleh kata atau struktur tertentu.</li>
+                <li>Membantu membuat komunikasi lebih mudah dipahami.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-tag">NODE_03 :: KLASIFIKASI_YULE</div>
+            <h1>Jenis Presuposisi</h1>
+            <p style="margin-bottom: 10px;">Menurut Yule, terdapat <span class="highlight">6 jenis</span> presuposisi:</p>
+            <div class="grid-6">
+                <div class="grid-item"><span style="color:#00ff80; text-shadow: 0 0 10px #00ff80; margin-right: 12px; font-weight:700;">01.</span> Eksistensial</div>
+                <div class="grid-item"><span style="color:#00ff80; text-shadow: 0 0 10px #00ff80; margin-right: 12px; font-weight:700;">02.</span> Faktif</div>
+                <div class="grid-item"><span style="color:#00ff80; text-shadow: 0 0 10px #00ff80; margin-right: 12px; font-weight:700;">03.</span> Leksikal</div>
+                <div class="grid-item"><span style="color:#00ff80; text-shadow: 0 0 10px #00ff80; margin-right: 12px; font-weight:700;">04.</span> Struktural</div>
+                <div class="grid-item"><span style="color:#00ff80; text-shadow: 0 0 10px #00ff80; margin-right: 12px; font-weight:700;">05.</span> Non-faktif</div>
+                <div class="grid-item"><span style="color:#00ff80; text-shadow: 0 0 10px #00ff80; margin-right: 12px; font-weight:700;">06.</span> Kontrafaktual</div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="slide-tag">TYPE_01 :: EXISTENCE</div>
+            <h1>Presuposisi Eksistensial</h1>
+            <p>Menganggap bahwa orang, benda, tempat, atau sesuatu yang disebutkan <span class="highlight">benar-benar ada</span>.</p>
+            
+            <div class="example-box">
+                <p class="example-text">“Motor Andi mogok di jalan.”</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Andi memiliki motor.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="slide-tag">TYPE_02 :: FACTUAL_STATE</div>
+            <h1>Presuposisi Faktif</h1>
+            <p>Menganggap bahwa informasi yang mengikuti kata tertentu merupakan <span class="highlight">fakta atau benar-benar terjadi</span>.</p>
+            <p style="font-family: 'Share Tech Mono', monospace; font-size: clamp(1rem, 2.4vmin, 1.5rem); color: #00ff80; text-shadow: 0 0 10px #00ff80;">>_ KATA_PEMICU: [tahu, menyesal, sadar, kaget, menyadari]</p>
+            
+            <div class="example-box">
+                <p class="example-text">“Dia <span class="highlight">menyesal</span> telah membohongi ibunya.”</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Dia memang telah membohongi ibunya.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="slide-tag">TYPE_03 :: LEXICAL_TRIGGER</div>
+            <h1>Presuposisi Leksikal</h1>
+            <p>Muncul karena <span class="highlight">kata tertentu mengandung informasi tambahan</span> yang tidak disampaikan secara langsung.</p>
+            
+            <div class="example-box">
+                <p class="example-text">“Andi sudah <span class="highlight">berhenti</span> menunda tugas.”</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Andi sebelumnya sering menunda tugas.</span>
+                </div>
+            </div>
+            <p style="margin-top: 10px; font-size: clamp(1rem, 2.4vmin, 1.45rem); color: #c5d0e0;">* Kata “berhenti” menjadi pemicu presuposisi karena menunjukkan kegiatan tersebut pernah dilakukan.</p>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="slide-tag">TYPE_04 :: SYNTAX_STRUCTURE</div>
+            <h1>Presuposisi Struktural</h1>
+            <p>Muncul karena struktur kalimat tertentu, terutama <span class="highlight">kalimat tanya</span> (apa, siapa, kapan, di mana, mengapa, bagaimana).</p>
+            
+            <div class="example-box">
+                <p class="example-text">“<span class="highlight">Kapan</span> kamu menyelesaikan tugas itu?”</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Kamu sudah menyelesaikan tugas itu.</span>
+                </div>
+            </div>
+            <p style="margin-top: 10px; font-size: clamp(1rem, 2.4vmin, 1.45rem); color: #c5d0e0;">* Kata tanya “kapan” mengasumsikan bahwa kegiatan tersebut sudah terjadi.</p>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="slide-tag">TYPE_05 :: NON_FACTUAL</div>
+            <h1>Presuposisi Non-faktif</h1>
+            <p>Presuposisi yang mengandung asumsi yang <span class="highlight">dibayangkan atau belum tentu benar</span>.</p>
+            
+            <div class="example-box">
+                <p class="example-text">"Seandainya aku memiliki banyak uang."</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Penutur belum tentu memiliki banyak uang.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="slide-tag">TYPE_06 :: COUNTER_FACTUAL</div>
+            <h1>Presuposisi Kontrafaktual</h1>
+            <p>Presuposisi yang mengandung asumsi yang <span class="highlight">bertentangan dengan kenyataan</span>.</p>
+            
+            <div class="example-box">
+                <p class="example-text">“Jika saja aku tidak terlambat, aku pasti bertemu dengannya.”</p>
+                <div class="presuposisi-result">
+                    <span>=></span>
+                    <span><strong>PRESUPOSISI:</strong> Penutur terlambat dan tidak bertemu dengannya.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Q&A Closing -->
+        <div class="slide">
+            <div style="text-align: center; width: 100%; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                <div class="slide-tag" style="margin-bottom: 15px; color: #ff3366; border-color: #ff3366; text-shadow: 0 0 12px rgba(255,51,102,0.9);">[ SYSTEM_TERMINATION ]</div>
+                <h1 style="border: none; padding: 0; text-align: center; font-size: clamp(2.4rem, 6.5vmin, 4.4rem); color: #ffffff; text-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 10px #00eeff; margin-bottom: 15px;">PRESENTASI SELESAI</h1>
+                
+                <p style="font-family: 'Share Tech Mono', monospace; color: #00ff80; text-shadow: 0 0 12px #00ff80; font-size: clamp(1.3rem, 3.2vmin, 2.1rem);">>_ END_OF_FILE.</p>
+                
+                <div style="margin-top: 30px; background: rgba(0, 238, 255, 0.08); border: 2px solid rgba(0, 238, 255, 0.6); box-shadow: 0 0 25px rgba(0, 238, 255, 0.3); padding: clamp(18px, 3vh, 28px); display: inline-block; border-radius: 6px; margin-inline: auto; max-width: 90%;">
+                    <p style="margin: 0; font-size: clamp(1.3rem, 4.2vmin, 2.4rem); color: #00eeff; text-shadow: 0 0 15px #00eeff; font-weight: bold;">APAKAH ADA PERTANYAAN?</p>
+                    <p style="font-family: 'Share Tech Mono', monospace; font-size: clamp(0.9rem, 2.2vmin, 1.4rem); color: #a5c2e0; margin-top: 8px;">// INPUT_AWAITING...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="prevBtn">&lt; KEMBALI</button>
+            <div class="slide-counter" id="counter">01 / 11</div>
+            <button class="btn" id="nextBtn">NEXT &gt;</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const counter = document.getElementById('counter');
+        
+        let currentSlide = 0;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            const currentFormatted = (currentSlide + 1).toString().padStart(2, '0');
+            const totalFormatted = slides.length.toString().padStart(2, '0');
+            counter.innerText = `${currentFormatted} / ${totalFormatted}`;
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold && currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+            if (touchEndX > touchStartX + threshold && currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        updateSlides();
+    </script>
+</body>
+</html>
